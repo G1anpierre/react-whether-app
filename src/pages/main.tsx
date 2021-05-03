@@ -46,12 +46,25 @@ const useStyles = makeStyles((theme) => ({
 const Main = () => {
   const classes = useStyles();
   const [word, setWord] = useState("");
+  const apiKey = 'a10e2b304a8e0f35736d1e73132248eb';
 
   function handleSubmit(value: string) {
+    console.log("valor del input", value);
     setWord(value);
+    getWeather();
+  }
+
+  //* Funcion asincrona que hace la peticion a openweather
+  async function getWeather() {
+    const URI = `https://api.openweathermap.org/data/2.5/weather?appid=${apiKey}&units=metric&q=${word}`;
+    const response = await fetch(URI);
+    const data = await response.json();
+    console.log(data);
+    return data;
   }
 
   console.log("word :", word);
+  // console.log("setWord :", setWord);
   return (
     <>
       <CssBaseline />
